@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/medicine">Medicine</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/doctor">Doctors</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'DOCTOR')">
+                    <a class="nav-link" href="/patient">Patients</a>
+                </li>
+            </ul>
+
+            <div style="margin-right: 15px" sec:authorize="hasAuthority('ADMIN')">
+                <h6 style="text-align: right">Hello Admin!</h6>
+                <p style="font-family: 'Times New Roman', serif" th:text="'Logged in: ' + ${LoggedDate}"></p>
+            </div>
+            <div style="margin-right: 15px" sec:authorize="hasAuthority('DOCTOR')">
+                <h6 style="text-align: right">Hello Doctor!</h6>
+                <p style="font-family: 'Times New Roman', serif" th:text="'Logged in: ' + ${LoggedDate}"></p>
+            </div>
+            <div style="margin-right: 15px" sec:authorize="hasAuthority('PATIENT')">
+                <h6 style="text-align: right">Hello Patient!</h6>
+                <p style="font-family: 'Times New Roman', serif" th:text="'Logged in: ' + ${LoggedDate}"></p>
+            </div>
+            <div sec:authorize="authenticated">
+                <a href="/logout" class="btn btn-outline-primary btn-sm" style="margin-bottom: 5px">Logout</a> <br>
+                <a sec:authorize="hasAuthority('ADMIN')" href="/registration" class="btn btn-outline-primary btn-sm">Register new user</a>
+            </div>
+
+            <div style="margin-right: 15px" sec:authorize="anonymous">
+                <h6>Hello User!</h6>
+            </div>
+            <div sec:authorize="anonymous">
+                <a href="/login" class="btn btn-outline-primary btn-sm">Login</a>
+            </div>
+            <div sec:authorize="anonymous" style="margin-left: 10px">
+                <a href="/registration" class="btn btn-outline-primary btn-sm">Register</a>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,58 @@
+<div th:if="${totalPages < 6}" th:with="pageName=${pageName}">
+    <nav aria-label="Page navigation example" th:if="${totalPages != 0}">
+        <ul class="pagination justify-content-center" >
+
+            <li class="page-item" th:classappend="${currentPage eq 1} ? 'disabled'" th:if="${totalPages != 1}" >
+                <a class="page-link" th:href="@{'/' + ${pageName} +'?page=' + ${currentPage - 1}}">Previous</a>
+            </li>
+
+            <!--list-->
+            <li class="page-item" th:each="i : ${pageList}" th:if="${totalPages != 1}" th:classappend="${currentPage eq i} ? 'active'">
+                <a class="page-link" th:href="@{'/' + ${pageName} +'?page=' + ${i}}" th:utext="${i}">...</a>
+            </li>
+            <!--end-->
+
+            <li class="page-item" th:classappend="${currentPage eq totalPages} ? 'disabled'" th:if="${totalPages != 1}">
+                <a class="page-link" th:href="@{'/' + ${pageName} +'?page=' + ${currentPage + 1}}">Next</a>
+            </li>
+
+        </ul>
+    </nav>
+</div>
+
+<div th:if="${totalPages > 5}" th:with="total=${totalPages}, current=${currentPage}, currentB=${currentPage - 1}, currentA=${currentPage + 1}, pageName=${pageName}">
+    <nav aria-label="Page navigation example" th:if="${totalPages != 0}">
+        <ul class="pagination justify-content-center" >
+
+            <li class="page-item" th:classappend="${currentPage eq 1} ? 'disabled'" th:if="${totalPages != 1}">
+                <a class="page-link" th:href="@{'/' + ${pageName} +'?page=' + ${currentPage - 1}}">Previous</a>
+            </li>
+
+            <li class="page-item" th:if="${current>2}">
+                <a class="page-link" th:href="@{'/' + ${pageName} +'?page=1'}">1</a>
+            </li>
+
+            <li class="page-item disabled" th:if="${current>3}">
+                <a class="page-link" href="#">...</a>
+            </li>
+
+            <!--list-->
+            <li class="page-item" th:each="i : ${threePage}" th:classappend="${currentPage eq i} ? 'active'">
+                <a class="page-link" th:href="@{'/' + ${pageName} + '?page=' + ${i}}" th:utext="${i}">...</a>
+            </li>
+            <!--end-->
+
+            <li class="page-item disabled" th:if="${current < total -2}">
+                <a class="page-link" href="#">...</a>
+            </li>
+
+            <li class="page-item" th:if="${current < total - 1}">
+                <a class="page-link" th:href="@{'/' + ${pageName} +'?page=' + ${total}}" th:utext="${total}">...</a>
+            </li>
+
+            <li class="page-item" th:classappend="${currentPage eq totalPages} ? 'disabled'" th:if="${totalPages != 1}">
+                <a class="page-link" th:href="@{'/' + ${pageName} + '?page=' + ${currentPage + 1}}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
